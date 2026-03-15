@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FrontDesk AI — Never Miss an HVAC Call Again</title>
+  <meta name="description" content="AI receptionist for HVAC and home service businesses. Answers every call 24/7, qualifies leads, and notifies you instantly. Never lose a job to voicemail again." />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue:   #1a56db;
+      --dark:   #111827;
+      --gray:   #6b7280;
+      --light:  #f9fafb;
+      --border: #e5e7eb;
+      --green:  #16a34a;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* NAV */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.25rem 2rem;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      background: #fff;
+      z-index: 100;
+    }
+    .logo { font-size: 1.2rem; font-weight: 700; color: var(--blue); }
+    .nav-cta {
+      background: var(--blue);
+      color: #fff;
+      padding: 0.5rem 1.25rem;
+      border-radius: 6px;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 5rem 1.5rem 4rem;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+    .badge {
+      display: inline-block;
+      background: #eff6ff;
+      color: var(--blue);
+      padding: 0.3rem 0.9rem;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1.5rem;
+    }
+    h1 {
+      font-size: clamp(2rem, 5vw, 3.25rem);
+      font-weight: 800;
+      line-height: 1.15;
+      margin-bottom: 1.25rem;
+      color: var(--dark);
+    }
+    h1 span { color: var(--blue); }
+    .hero-sub {
+      font-size: 1.15rem;
+      color: var(--gray);
+      max-width: 580px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-cta {
+      display: inline-block;
+      background: var(--blue);
+      color: #fff;
+      padding: 0.9rem 2.25rem;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      transition: opacity 0.15s;
+    }
+    .hero-cta:hover { opacity: 0.9; }
+    .hero-note { font-size: 0.85rem; color: var(--gray); }
+
+    /* PAIN */
+    .pain {
+      background: #fef2f2;
+      border-top: 3px solid #ef4444;
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+    .pain p {
+      max-width: 640px;
+      margin: 0 auto;
+      font-size: 1.1rem;
+      color: #7f1d1d;
+    }
+    .pain strong { color: #b91c1c; }
+
+    /* SECTION COMMON */
+    section { padding: 5rem 1.5rem; }
+    .section-inner { max-width: 900px; margin: 0 auto; }
+    .section-label {
+      text-align: center;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 0.75rem;
+    }
+    h2 {
+      text-align: center;
+      font-size: clamp(1.6rem, 4vw, 2.25rem);
+      font-weight: 800;
+      margin-bottom: 0.75rem;
+    }
+    .section-sub {
+      text-align: center;
+      color: var(--gray);
+      max-width: 560px;
+      margin: 0 auto 3rem;
+    }
+
+    /* HOW IT WORKS */
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 2rem;
+    }
+    .step {
+      text-align: center;
+      padding: 2rem 1.5rem;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    .step-num {
+      width: 2.5rem;
+      height: 2.5rem;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1rem;
+      margin: 0 auto 1rem;
+    }
+    .step h3 { font-size: 1.05rem; margin-bottom: 0.5rem; }
+    .step p { color: var(--gray); font-size: 0.93rem; }
+
+    /* TRANSCRIPT */
+    .transcript-wrap { background: var(--light); }
+    .transcript {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      max-width: 680px;
+      margin: 0 auto;
+      font-size: 0.95rem;
+    }
+    .transcript-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 1.25rem;
+    }
+    .line { display: flex; gap: 0.75rem; margin-bottom: 1rem; align-items: flex-start; }
+    .speaker {
+      font-weight: 700;
+      font-size: 0.8rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 4px;
+      white-space: nowrap;
+      margin-top: 0.1rem;
+    }
+    .ai   { background: #eff6ff; color: var(--blue); }
+    .caller { background: #f0fdf4; color: var(--green); }
+    .line p { color: var(--dark); }
+
+    /* PRICING */
+    .pricing-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 2rem;
+      text-align: center;
+    }
+    .card.featured {
+      border: 2px solid var(--blue);
+      position: relative;
+    }
+    .card-badge {
+      position: absolute;
+      top: -0.75rem;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--blue);
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 0.2rem 0.85rem;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+    .card h3 { font-size: 1rem; color: var(--gray); margin-bottom: 0.5rem; }
+    .price { font-size: 2.5rem; font-weight: 800; color: var(--dark); }
+    .price span { font-size: 1rem; font-weight: 400; color: var(--gray); }
+    .card-desc { color: var(--gray); font-size: 0.9rem; margin: 0.75rem 0 1.5rem; }
+    .card ul { list-style: none; text-align: left; margin-bottom: 1.75rem; }
+    .card ul li { padding: 0.35rem 0; font-size: 0.93rem; }
+    .card ul li::before { content: "✓ "; color: var(--green); font-weight: 700; }
+    .btn {
+      display: block;
+      padding: 0.8rem;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn:hover { opacity: 0.88; }
+    .btn-primary { background: var(--blue); color: #fff; }
+    .btn-outline { border: 2px solid var(--blue); color: var(--blue); }
+
+    /* ABOUT */
+    .about-wrap { background: var(--light); }
+    .about-inner {
+      max-width: 620px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .avatar {
+      width: 72px;
+      height: 72px;
+      background: var(--blue);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.75rem;
+      font-weight: 800;
+      margin: 0 auto 1rem;
+    }
+    .about-inner h3 { font-size: 1.2rem; margin-bottom: 0.25rem; }
+    .about-inner .role { color: var(--gray); font-size: 0.9rem; margin-bottom: 1rem; }
+    .about-inner p { color: var(--gray); }
+
+    /* FINAL CTA */
+    .final-cta {
+      text-align: center;
+      padding: 5rem 1.5rem;
+      background: var(--blue);
+      color: #fff;
+    }
+    .final-cta h2 { color: #fff; margin-bottom: 0.75rem; }
+    .final-cta p { color: #bfdbfe; margin-bottom: 2rem; font-size: 1.05rem; }
+    .btn-white {
+      display: inline-block;
+      background: #fff;
+      color: var(--blue);
+      padding: 0.9rem 2.25rem;
+      border-radius: 8px;
+      font-size: 1.05rem;
+      font-weight: 700;
+    }
+    .final-note { color: #bfdbfe; font-size: 0.85rem; margin-top: 1rem; }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid var(--border);
+      color: var(--gray);
+      font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+      nav { padding: 1rem; }
+      .hero { padding: 3.5rem 1rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">FrontDesk AI</div>
+  <a href="#pricing" class="nav-cta">Get Started</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="badge">AI Receptionist for Home Service Businesses</div>
+  <h1>Never Miss an HVAC Call <span>Again</span></h1>
+  <p class="hero-sub">
+    Your AI receptionist answers every inbound call 24/7 — qualifies the lead,
+    collects their info, and texts you instantly. Even at 2am.
+  </p>
+  <a href="#pricing" class="hero-cta">Start Your 30-Day Pilot — $500</a>
+  <p class="hero-note">No contracts. Cancel anytime. Setup in 24 hours.</p>
+</div>
+
+<!-- PAIN -->
+<div class="pain">
+  <p>
+    The average missed HVAC call is worth <strong>$500–$5,000</strong>.
+    If your phone goes to voicemail after hours, that job goes to your competitor.
+    <strong>Every single time.</strong>
+  </p>
+</div>
+
+<!-- HOW IT WORKS -->
+<section>
+  <div class="section-inner">
+    <p class="section-label">How It Works</p>
+    <h2>Set up in 24 hours. Works forever.</h2>
+    <p class="section-sub">No new apps to learn. Your customers call the same number they always have.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <h3>Customer Calls</h3>
+        <p>Your existing number forwards to our AI after hours — or all day if you want.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <h3>AI Qualifies the Lead</h3>
+        <p>Asks the right questions: job type, location, urgency, name, and callback number.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <h3>You Get Notified</h3>
+        <p>Instant SMS and email with every lead detail. Reply when you're ready.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TRANSCRIPT -->
+<section class="transcript-wrap">
+  <div class="section-inner">
+    <p class="section-label">Real Conversation</p>
+    <h2>Hear what your customers hear</h2>
+    <p class="section-sub">Professional, warm, and always available — exactly like a trained receptionist.</p>
+    <div class="transcript">
+      <div class="transcript-title">Sample Call — 11:43pm on a Saturday</div>
+      <div class="line">
+        <span class="speaker ai">AI</span>
+        <p>Thank you for calling Atlanta Comfort HVAC, how can I help you today?</p>
+      </div>
+      <div class="line">
+        <span class="speaker caller">Caller</span>
+        <p>Hi yeah, my AC stopped working and it's 85 degrees in my house right now.</p>
+      </div>
+      <div class="line">
+        <span class="speaker ai">AI</span>
+        <p>I'm sorry to hear that — let's get someone out to you. Can I get your address or zip code?</p>
+      </div>
+      <div class="line">
+        <span class="speaker caller">Caller</span>
+        <p>Sure, it's 847 Peachtree Street, Atlanta.</p>
+      </div>
+      <div class="line">
+        <span class="speaker ai">AI</span>
+        <p>Got it. And your name and best callback number?</p>
+      </div>
+      <div class="line">
+        <span class="speaker caller">Caller</span>
+        <p>Mike Johnson, 404-555-0192.</p>
+      </div>
+      <div class="line">
+        <span class="speaker ai">AI</span>
+        <p>Perfect, Mike. The owner will call you back within 30 minutes for this emergency. You're all set — stay cool!</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing">
+  <div class="section-inner">
+    <p class="section-label">Pricing</p>
+    <h2>Simple, transparent pricing</h2>
+    <p class="section-sub">Start with a 30-day pilot. No risk — if it doesn't pay for itself, you don't continue.</p>
+    <div class="pricing-cards">
+      <div class="card featured">
+        <div class="card-badge">Most Popular</div>
+        <h3>30-Day Pilot</h3>
+        <div class="price">$500 <span>one-time</span></div>
+        <p class="card-desc">Everything you need to prove the ROI before committing.</p>
+        <ul>
+          <li>AI answers all inbound calls</li>
+          <li>Lead qualification + SMS alerts</li>
+          <li>Google Sheets lead log</li>
+          <li>Setup in 24 hours</li>
+          <li>Dedicated support</li>
+        </ul>
+        <a href="STRIPE_PAYMENT_LINK" class="btn btn-primary">Start Pilot — $500</a>
+      </div>
+      <div class="card">
+        <h3>Monthly Retainer</h3>
+        <div class="price">$499 <span>/month</span></div>
+        <p class="card-desc">After your pilot. Cancel anytime.</p>
+        <ul>
+          <li>Everything in pilot</li>
+          <li>Unlimited calls</li>
+          <li>Custom AI voice & script</li>
+          <li>Monthly performance report</li>
+          <li>Priority support</li>
+        </ul>
+        <a href="STRIPE_PAYMENT_LINK" class="btn btn-outline">Get Started</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-wrap">
+  <div class="section-inner">
+    <p class="section-label">About</p>
+    <h2>Built by someone who gets it</h2>
+    <div class="about-inner">
+      <div class="avatar">MJ</div>
+      <h3>Maharshi Jha</h3>
+      <p class="role">Founder, FrontDesk AI</p>
+      <p>
+        I built FrontDesk AI because I watched too many small contractors lose
+        jobs to voicemail. Home service businesses work hard — they shouldn't
+        lose a $3,000 job because they were under a sink at 9pm.
+        Our AI makes sure that never happens.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<div class="final-cta">
+  <h2>One missed call can cost you $3,000.</h2>
+  <p>Start your 30-day pilot today. Setup takes 24 hours.</p>
+  <a href="STRIPE_PAYMENT_LINK" class="btn-white">Get Started — $500 Pilot</a>
+  <p class="final-note">Questions? Email maharshi@frontdeskai.me</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 FrontDesk AI · maharshi@frontdeskai.me</p>
+</footer>
+
+</body>
+</html>
